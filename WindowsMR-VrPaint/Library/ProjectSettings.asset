@@ -228,7 +228,6 @@ PlayerSettings:
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
   AndroidEnableTango: 0
-  AndroidTangoUsesCamera: 1
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
   m_AndroidBanners:
@@ -529,11 +528,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: WindowsMR-VrPaint
   metroPackageVersion: 
-  metroCertificatePath: 
+  metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: DefaultCompany
+  metroCertificateIssuer: DefaultCompany
+  metroCertificateNotAfter: 00f30254503fd401
   metroApplicationDescription: WindowsMR-VrPaint
   wsaImages: {}
   metroTileShortName: 
@@ -608,7 +607,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: 8ae3ccad-9693-4ac4-87eb-0ff505baee25
   projectName: WindowsMR-VrPaint
   organizationId: unity_wesley
