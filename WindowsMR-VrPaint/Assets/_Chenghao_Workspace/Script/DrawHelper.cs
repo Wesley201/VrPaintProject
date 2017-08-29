@@ -32,7 +32,8 @@ public class DrawHelper : MonoBehaviour
 			drawingObject.AddComponent<LineRenderer> ();
 			drawingObject.GetComponent<LineRenderer> ().material = new Material(Shader.Find("Particles/Additive"));
 			drawingObject.GetComponent<LineRenderer> ().positionCount = 0;
-			drawingObject.GetComponent<LineRenderer> ().SetWidth(0.2f, 0.2f);
+			drawingObject.GetComponent<LineRenderer> ().SetWidth(5f, 5f);
+			drawingObject.GetComponent<LineRenderer> ().SetColors(Color.red, Color.red);
 		}
 			
 		int newSize = drawingObject.GetComponent<LineRenderer> ().positionCount + 1;
