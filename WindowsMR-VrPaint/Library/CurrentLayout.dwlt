@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 8}
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 492}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -40,9 +40,15 @@ MonoBehaviour:
     y: 665
     width: 1156
     height: 642
+<<<<<<< HEAD
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
+=======
+  m_MinSize: {x: 204, y: 221}
+  m_MaxSize: {x: 4004, y: 4021}
+  m_ActualView: {fileID: 20}
+>>>>>>> 60e10bfc8a4a5359ebe9f4606755df9c6cb7b813
   m_Panes:
   - {fileID: 19}
   m_Selected: 0
@@ -70,7 +76,11 @@ MonoBehaviour:
   m_MinSize: {x: 204, y: 442}
   m_MaxSize: {x: 4004, y: 8042}
   vertical: 1
+<<<<<<< HEAD
   controlID: 103
+=======
+  controlID: 99
+>>>>>>> 60e10bfc8a4a5359ebe9f4606755df9c6cb7b813
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -119,7 +129,11 @@ MonoBehaviour:
   m_MinSize: {x: 917, y: 442}
   m_MaxSize: {x: 22012, y: 10021}
   vertical: 0
+<<<<<<< HEAD
   controlID: 101
+=======
+  controlID: 46
+>>>>>>> 60e10bfc8a4a5359ebe9f4606755df9c6cb7b813
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +154,11 @@ MonoBehaviour:
     height: 1307
   m_MinSize: {x: 277, y: 71}
   m_MaxSize: {x: 4002, y: 4021}
+<<<<<<< HEAD
   m_ActualView: {fileID: 16}
+=======
+  m_ActualView: {fileID: 17}
+>>>>>>> 60e10bfc8a4a5359ebe9f4606755df9c6cb7b813
   m_Panes:
   - {fileID: 20}
   - {fileID: 16}
@@ -194,7 +212,7 @@ MonoBehaviour:
     y: 0
     width: 2560
     height: 1357
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 492}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &9
 MonoBehaviour:
@@ -261,7 +279,11 @@ MonoBehaviour:
   m_MinSize: {x: 640, y: 442}
   m_MaxSize: {x: 18010, y: 10021}
   vertical: 0
+<<<<<<< HEAD
   controlID: 102
+=======
+  controlID: 47
+>>>>>>> 60e10bfc8a4a5359ebe9f4606755df9c6cb7b813
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -388,18 +410,26 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
+<<<<<<< HEAD
     - Assets/Scenes
+=======
+    - Assets/Materials
+>>>>>>> 60e10bfc8a4a5359ebe9f4606755df9c6cb7b813
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\Unity\Desktop\VrPaint\WindowsMR-VrPaint
+  m_LastProjectPath: C:\Dev\VRPaintProject\WindowsMR-VrPaint
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 14}
     m_SelectedIDs: 06280000
     m_LastClickedID: 10246
+<<<<<<< HEAD
     m_ExpandedIDs: 5e2700006a270000702700008227000094270000b2270000
+=======
+    m_ExpandedIDs: 922700009e270000a4270000
+>>>>>>> 60e10bfc8a4a5359ebe9f4606755df9c6cb7b813
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -427,7 +457,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 5e2700006a270000702700008227000094270000b2270000
+=======
+    m_ExpandedIDs: 00000000922700009e270000a427000056280000
+>>>>>>> 60e10bfc8a4a5359ebe9f4606755df9c6cb7b813
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: TestScene
@@ -543,9 +577,15 @@ MonoBehaviour:
     height: 1286
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: e8280000
     m_LastClickedID: 10472
     m_ExpandedIDs: 80ceffff50cfffffa6d0ffffd2f4ffffa0fbffff00000000
+=======
+    m_SelectedIDs: 96f1ffff
+    m_LastClickedID: 0
+    m_ExpandedIDs: 12fbffff00000000
+>>>>>>> 60e10bfc8a4a5359ebe9f4606755df9c6cb7b813
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
