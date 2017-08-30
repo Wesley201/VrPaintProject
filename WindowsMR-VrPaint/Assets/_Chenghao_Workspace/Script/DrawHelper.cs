@@ -1,24 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.WSA;
+using System;
 
 public class DrawHelper : MonoBehaviour 
 {
 	private GameObject drawingObject = null;
 
-	public void Update()
+	public void Start()
 	{
-		if (Input.GetMouseButton (0)) 
-		{
-			AddPoints (Input.mousePosition, false);
-		}
+		UnityEngine.XR.WSA.Input.GestureRecognizer gestureRecognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
+		gestureRecognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Hold);
 
-		if (Input.GetMouseButtonUp(0))
+		gestureRecognizer.HoldStartedEvent += (source, ray) =>
 		{
-			AddPoints (Input.mousePosition, true);
-		}
+			Debug.Log(source);
+			OnHoldStarted(ray.origin);
+		};
+
+		gestureRecognizer.HoldCompletedEvent += (source, ray) =>
+		{
+			Debug.Log(source);
+			OnHoldCompleted(ray.origin);
+		};
 	}
-	
+
+	public void OnHoldStarted(Vector3 position)
+	{
+		AddPoints (position, false);
+	}
+
+	public void OnHoldCompleted(Vector3 position)
+	{
+		AddPoints (position, true);
+	}
+		
 	public static DrawHelper GetInstance()
 	{
 		return GameObject.FindObjectOfType<DrawHelper> ();
