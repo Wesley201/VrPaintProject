@@ -23,11 +23,11 @@ public class HandTracking : MonoBehaviour
     public bool ErrorShaderTest = false;
     float timeSinceLastUpdate = 0;
     float minTimeSinceLastUpdate = 0.1f;
-
-    private ColorPicker colorPicker;
-
+    
     GameObject m_Cam;
     Vector3 TrailPos;
+
+    public GameObject PalleteColor;
 
     void Start ()
     {
@@ -41,8 +41,6 @@ public class HandTracking : MonoBehaviour
         m_Cam = Camera.main.gameObject;
 
         InteractionManager.GetCurrentReading();
-
-        colorPicker = GetComponent<ColorPicker>();
     }
     void Update ()
     {
@@ -66,6 +64,13 @@ public class HandTracking : MonoBehaviour
         TrailPos = m_Cam.transform.forward * 2 + m_HandPos;
         Trail(TrailPos);
         m_TrailRenderer.transform.position = TrailPos;
+
+        //If user is not hovering on a pallet color...
+        if (PalleteColor != null)
+        {
+            //Run ChangeColor method in ColorPicker script
+            ColorPicker.ChangeColor();
+        }
     }
 
     private void InteractionManager_InteractionSourceLost(InteractionSourceLostEventArgs obj)
@@ -112,13 +117,12 @@ public class HandTracking : MonoBehaviour
 
     void Trail(Vector3 startPos)
     {
-        //Creates the brush trail
-        m_TrailRenderer = new GameObject("Trail").AddComponent<TrailRenderer>();
+       m_TrailRenderer = new GameObject("Trail").AddComponent<TrailRenderer>();
 
-        //following block sets up the brush parameters and verifies a material is set
-        m_TrailRenderer.material = colorPicker.brushColor;
-        if (colorPicker.brushColor == null)        //Throws error if somehow the brush material has not been set in ColorPicker.cs
+       m_TrailRenderer.material = ColorPicker.brushColor;
+       if (ColorPicker.brushColor == null)      
         {
+            //Throws error if somehow the brush material has not been set in ColorPicker.cs
             Debug.LogError("ERROR: Brush color is null. Has not been set in ColorPicker.cs");
         }
         m_TrailRenderer.startWidth = startLineWidth;
@@ -131,5 +135,18 @@ public class HandTracking : MonoBehaviour
     {
         Vector3 v = m_HandPos * 2 + endPos;
         timeSinceLastUpdate = 0;
+    }
+
+    //Color Pallete management
+  void OnCollisionEnter(Collision collisionObj)
+    {
+        //If drawing hand collides with an object tagged PalleteColor
+        if (collisionObj.gameObject.CompareTag("PalleteColor"))
+        {
+            //Store the game object into PalleteColor for reference
+            PalleteColor = collisionObj.gameObject;
+            //Retrieve the material of collisionObj and store it in the ColorPicker script's variable "selectedPalleteMaterial"
+            ColorPicker.selectedPalleteMaterial = collisionObj.gameObject.GetComponent<Renderer>().material;
+        }
     }
 }

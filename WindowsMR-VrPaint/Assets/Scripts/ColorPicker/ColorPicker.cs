@@ -7,22 +7,23 @@
  * TrailRenderer.material property in the code which creates the trail.
  */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.WSA.Input;
 
 public class ColorPicker : MonoBehaviour
 {
     /*== CONTAINERS FOR COLORS ==*/
+    static public Material brushColor;
 
-    //private Material stagedColor;             //Not using this yet, will implement if we move to RGB picker then this will be a staging material to preview what you're picking
-    public Material brushColor;
-
-    /*== COLORS ==*/
     public Material colorSmoke;            //Default color
     public Material colorBlue;
     public Material colorGreen;
     public Material colorRed;
+
+    static public Material selectedPalleteMaterial;
     
 	void Start ()
 	{
@@ -30,12 +31,11 @@ public class ColorPicker : MonoBehaviour
         if(brushColor == null)
 	    brushColor = colorSmoke;
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
 
-        //Controls to change brush color
+    // Update is called once per frame
+    void Update ()
+    {
+        //Keyboard Controls to change brush color
         if (Input.GetKeyDown(KeyCode.B))
         {
             brushColor = colorBlue;
@@ -56,5 +56,10 @@ public class ColorPicker : MonoBehaviour
             brushColor = colorSmoke;
             Debug.Log("Color has been set to SMOKE");
         }
+    }
+
+    public static void ChangeColor()
+    {
+        brushColor = selectedPalleteMaterial;
     }
 }
