@@ -1,32 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.WSA;
+using UnityEngine.XR.WSA.Input;
 using System;
 
 public class DrawHelper : MonoBehaviour 
 {
 	private GameObject drawingObject = null;
+	private Vector3 handsPosition;
 
 	public void Start()
 	{
-		UnityEngine.XR.WSA.Input.GestureRecognizer gestureRecognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
-		gestureRecognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Hold | UnityEngine.XR.WSA.Input.GestureSettings.Tap);
+		GestureRecognizer gestureRecognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
+		gestureRecognizer.SetRecognizableGestures(GestureSettings.Hold | GestureSettings.Tap);
 
-		gestureRecognizer.HoldStartedEvent += OnHoldStarted;
-		gestureRecognizer.HoldCompletedEvent += OnHoldCompleted;
+		InteractionManager.InteractionSourcePressed += OnHoldStarted;
+		InteractionManager.InteractionSourceReleased += OnHoldCompleted;
 
 		gestureRecognizer.StartCapturingGestures ();
+		InteractionManager.GetCurrentReading();
+	}
+	// InteractionSourceState state
+	public void OnHoldStarted(InteractionSourcePressedEventArgs obj)
+	{
+		obj.state.sourcePose.TryGetPosition(out handsPosition);
+		AddPoints (handsPosition, false);
 	}
 
-	public void OnHoldStarted(UnityEngine.XR.WSA.Input.InteractionSourceKind source, Ray ray)
+	public void OnHoldCompleted(InteractionSourceReleasedEventArgs obj)
 	{
-		AddPoints (ray.origin, false);
-	}
-
-	public void OnHoldCompleted(UnityEngine.XR.WSA.Input.InteractionSourceKind source, Ray ray)
-	{
-		AddPoints (ray.origin, true);
+		obj.state.sourcePose.TryGetPosition(out handsPosition);
+		AddPoints (handsPosition, true);
 	}
 		
 	public static DrawHelper GetInstance()
