@@ -14,7 +14,7 @@ public class DrawHelper : MonoBehaviour
 		gestureRecognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Hold | UnityEngine.XR.WSA.Input.GestureSettings.Tap);
 
 		gestureRecognizer.HoldStartedEvent += OnHoldStarted;
-		gestureRecognizer.HoldCompleted += OnHoldCompleted;
+		gestureRecognizer.HoldCompletedEvent += OnHoldCompleted;
 
 		gestureRecognizer.StartCapturingGestures ();
 	}
