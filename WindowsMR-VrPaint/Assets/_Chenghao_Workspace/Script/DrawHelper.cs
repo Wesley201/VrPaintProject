@@ -13,31 +13,20 @@ public class DrawHelper : MonoBehaviour
 		UnityEngine.XR.WSA.Input.GestureRecognizer gestureRecognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
 		gestureRecognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Hold | UnityEngine.XR.WSA.Input.GestureSettings.Tap);
 
-		new UnityEngine.XR.WSA.Input.TappedEventArgs((value) => {
-			Debug.Log("tapped");	
-		});
-
-		new UnityEngine.XR.WSA.Input.GestureRecognizer.HoldStartedEventDelegate ((source, headRay) => {
-			Debug.Log (source);
-			OnHoldStarted (headRay.origin);
-		});
-
-		new UnityEngine.XR.WSA.Input.GestureRecognizer.HoldCompletedEventDelegate ((source, headRay) => {
-			Debug.Log (source);
-			OnHoldCompleted (headRay.origin);
-		});
+		gestureRecognizer.HoldStartedEvent += OnHoldStarted;
+		gestureRecognizer.HoldCompleted += OnHoldCompleted;
 
 		gestureRecognizer.StartCapturingGestures ();
 	}
 
-	public void OnHoldStarted(Vector3 position)
+	public void OnHoldStarted(UnityEngine.XR.WSA.Input.InteractionSourceKind source, Ray ray)
 	{
-		AddPoints (position, false);
+		AddPoints (ray.origin, false);
 	}
 
-	public void OnHoldCompleted(Vector3 position)
+	public void OnHoldCompleted(UnityEngine.XR.WSA.Input.InteractionSourceKind source, Ray ray)
 	{
-		AddPoints (position, true);
+		AddPoints (ray.origin, true);
 	}
 		
 	public static DrawHelper GetInstance()
