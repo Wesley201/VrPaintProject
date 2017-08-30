@@ -24,6 +24,8 @@ public class HandTracking : MonoBehaviour
     float timeSinceLastUpdate = 0;
     float minTimeSinceLastUpdate = 0.1f;
 
+    private ColorPicker colorPicker;
+
     GameObject m_Cam;
     Vector3 TrailPos;
 
@@ -39,6 +41,8 @@ public class HandTracking : MonoBehaviour
         m_Cam = Camera.main.gameObject;
 
         InteractionManager.GetCurrentReading();
+
+        colorPicker = GetComponent<ColorPicker>();
     }
     void Update ()
     {
@@ -108,9 +112,15 @@ public class HandTracking : MonoBehaviour
 
     void Trail(Vector3 startPos)
     {
+        //Creates the brush trail
         m_TrailRenderer = new GameObject("Trail").AddComponent<TrailRenderer>();
 
-        m_TrailRenderer.material = Resources.Load("Material/Materials/Smoke") as Material;
+        //following block sets up the brush parameters and verifies a material is set
+        m_TrailRenderer.material = colorPicker.brushColor;
+        if (colorPicker.brushColor == null)        //Throws error if somehow the brush material has not been set in ColorPicker.cs
+        {
+            Debug.LogError("ERROR: Brush color is null. Has not been set in ColorPicker.cs");
+        }
         m_TrailRenderer.startWidth = startLineWidth;
         m_TrailRenderer.endWidth = endLineWidth;
         m_TrailRenderer.transform.position = startPos;

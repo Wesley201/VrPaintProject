@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -112,6 +112,27 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &60405190 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1606896313658796, guid: bcccd25ebdcb23a469328b446178db99,
+    type: 2}
+  m_PrefabInternal: {fileID: 1034170644}
+--- !u!114 &60405191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 60405190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ef60e8f86f3fe74cba4f72ea1817437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brushColor: {fileID: 0}
+  colorSmoke: {fileID: 2100000, guid: 1c878b7c51858c544b40594405457678, type: 2}
+  colorBlue: {fileID: 2100000, guid: dfa4d07c4fbfe7448ad202e7cc6f2e00, type: 2}
+  colorGreen: {fileID: 2100000, guid: b0c0598eeeb672a45b1164b65d8a13e1, type: 2}
+  colorRed: {fileID: 2100000, guid: fedbbc548558b3f48a93285cb3638f32, type: 2}
 --- !u!1 &501342268
 GameObject:
   m_ObjectHideFlags: 0

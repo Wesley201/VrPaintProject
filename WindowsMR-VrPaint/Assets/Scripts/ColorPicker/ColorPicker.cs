@@ -16,7 +16,7 @@ public class ColorPicker : MonoBehaviour
     /*== CONTAINERS FOR COLORS ==*/
 
     //private Material stagedColor;             //Not using this yet, will implement if we move to RGB picker then this will be a staging material to preview what you're picking
-    private Material brushColor;
+    public Material brushColor;
 
     /*== COLORS ==*/
     public Material colorSmoke;            //Default color
@@ -34,6 +34,8 @@ public class ColorPicker : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+
+        //Controls to change brush color
         if (Input.GetKeyDown(KeyCode.B))
         {
             brushColor = colorBlue;
@@ -49,10 +51,10 @@ public class ColorPicker : MonoBehaviour
             brushColor = colorRed;
             Debug.Log("Brush color has been set to RED");
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             brushColor = colorSmoke;
-            Debug.Log("Color has been set to WHITE");
+            Debug.Log("Color has been set to SMOKE");
         }
     }
 }
