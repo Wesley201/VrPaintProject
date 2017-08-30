@@ -11,19 +11,23 @@ public class DrawHelper : MonoBehaviour
 	public void Start()
 	{
 		UnityEngine.XR.WSA.Input.GestureRecognizer gestureRecognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
-		gestureRecognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Hold);
+		gestureRecognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Hold | UnityEngine.XR.WSA.Input.GestureSettings.Tap);
 
-		gestureRecognizer.HoldStartedEvent += (source, ray) =>
-		{
-			Debug.Log(source);
-			OnHoldStarted(ray.origin);
-		};
+		new UnityEngine.XR.WSA.Input.TappedEventArgs((value) => {
+			Debug.Log("tapped");	
+		});
 
-		gestureRecognizer.HoldCompletedEvent += (source, ray) =>
-		{
-			Debug.Log(source);
-			OnHoldCompleted(ray.origin);
-		};
+		new UnityEngine.XR.WSA.Input.GestureRecognizer.HoldStartedEventDelegate ((source, headRay) => {
+			Debug.Log (source);
+			OnHoldStarted (headRay.origin);
+		});
+
+		new UnityEngine.XR.WSA.Input.GestureRecognizer.HoldCompletedEventDelegate ((source, headRay) => {
+			Debug.Log (source);
+			OnHoldCompleted (headRay.origin);
+		});
+
+		gestureRecognizer.StartCapturingGestures ();
 	}
 
 	public void OnHoldStarted(Vector3 position)
