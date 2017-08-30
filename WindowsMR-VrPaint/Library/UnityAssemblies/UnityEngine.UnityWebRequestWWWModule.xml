@@ -4,17 +4,20 @@
 		<name>UnityEngine.UnityWebRequestWWWModule</name>
 	</assembly>
 	<members>
-		<member name="T:UnityEngine.WWWAudioExtensions">
-			<summary>Provides methods to access AudioClip or MovieTexture objects from WWW streams.</summary>
-		</member>
 		<member name="T:UnityEngine.WWW">
 			<summary>Simple access to web pages.</summary>
+		</member>
+		<member name="T:UnityEngine.WWWAudioExtensions">
+			<summary>Provides methods to access AudioClip or MovieTexture objects from WWW streams.</summary>
 		</member>
 		<member name="P:UnityEngine.WWW.assetBundle">
 			<summary>Streams an AssetBundle that can contain any kind of asset from the project folder.</summary>
 		</member>
 		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW)">
 			<summary>Returns an AudioClip generated from the downloaded data (Read Only).</summary>
+		</member>
+		<member name="P:UnityEngine.WWW.bytes">
+			<summary>Returns the contents of the fetched web page as a byte array (Read Only).</summary>
 		</member>
 		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW,System.Boolean)">
 			<summary>Returns an AudioClip generated from the downloaded data (Read Only).</summary>
@@ -24,9 +27,6 @@
 		</member>
 		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW,System.Boolean,System.Boolean,UnityEngine.AudioType)">
 			<summary>Returns an AudioClip generated from the downloaded data (Read Only).</summary>
-		</member>
-		<member name="P:UnityEngine.WWW.bytes">
-			<summary>Returns the contents of the fetched web page as a byte array (Read Only).</summary>
 		</member>
 		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClipCompressed(UnityEngine.WWW)">
 			<summary>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</summary>
