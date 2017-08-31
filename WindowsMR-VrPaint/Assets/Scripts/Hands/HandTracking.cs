@@ -17,6 +17,8 @@ public class HandTracking : MonoBehaviour
     public bool m_Drawing = false;
     public float m_SelectPressedAmount = 0f;
 
+    //MORTY, I'M A PICKLE!
+
     public TrailRenderer m_TrailRenderer;
     public float startLineWidth = 0.01f;
     public float endLineWidth = 0.01f;
@@ -27,6 +29,7 @@ public class HandTracking : MonoBehaviour
     GameObject m_Cam;
     Vector3 TrailPos;
 
+    //Stores the color the user is selecting from the pallet hand. If no color is being selected then this will be null. See OnCollisionEnter/Exit below.
     public GameObject PalleteColor;
 
     void Start ()
@@ -42,10 +45,6 @@ public class HandTracking : MonoBehaviour
 
         InteractionManager.GetCurrentReading();
     }
-    void Update ()
-    {
-		
-	}
 
     /// Event Args for the Interaction Manager Events
     private void InteractionManager_InteractionSourceReleased(InteractionSourceReleasedEventArgs obj)
@@ -58,18 +57,20 @@ public class HandTracking : MonoBehaviour
 
     private void InteractionManager_InteractionSourcePressed(InteractionSourcePressedEventArgs obj)
     {
-        m_Drawing = true;
-
-        obj.state.sourcePose.TryGetPosition(out m_HandPos);
-        TrailPos = m_Cam.transform.forward * 2 + m_HandPos;
-        Trail(TrailPos);
-        m_TrailRenderer.transform.position = TrailPos;
-
-        //If user is not hovering on a pallet color...
+        //We check if the user is trying to change color instead of painting before continuing on
         if (PalleteColor != null)
         {
             //Run ChangeColor method in ColorPicker script
             ColorPicker.ChangeColor();
+        }
+        else
+        {
+            m_Drawing = true;
+
+            obj.state.sourcePose.TryGetPosition(out m_HandPos);
+            TrailPos = m_Cam.transform.forward * 2 + m_HandPos;
+            Trail(TrailPos);
+            m_TrailRenderer.transform.position = TrailPos;
         }
     }
 
@@ -137,7 +138,9 @@ public class HandTracking : MonoBehaviour
         timeSinceLastUpdate = 0;
     }
 
-    //Color Pallete management
+    //Color Pallet management
+    //--OnCollisionEnter()
+    //--OnCollisionExit()
   void OnCollisionEnter(Collision collisionObj)
     {
         //If drawing hand collides with an object tagged PalleteColor
@@ -147,6 +150,15 @@ public class HandTracking : MonoBehaviour
             PalleteColor = collisionObj.gameObject;
             //Retrieve the material of collisionObj and store it in the ColorPicker script's variable "selectedPalleteMaterial"
             ColorPicker.selectedPalleteMaterial = collisionObj.gameObject.GetComponent<Renderer>().material;
+        }
+    }
+
+    void OnCollisionExit(Collision collisionObj)
+    {
+        //If user is not trying to change color we change the PalletColor to null
+        if (collisionObj.gameObject.CompareTag("PalleteColor"))
+        {
+            PalleteColor = null;
         }
     }
 }

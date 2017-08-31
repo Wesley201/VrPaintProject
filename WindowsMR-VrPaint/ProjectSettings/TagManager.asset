@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - PalleteColor
+  - Button
   layers:
   - Default
   - TransparentFX
