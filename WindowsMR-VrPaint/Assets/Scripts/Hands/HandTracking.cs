@@ -32,9 +32,6 @@ public class HandTracking : MonoBehaviour
     float timeSinceLastUpdate = 0;
     float minTimeSinceLastUpdate = 0.1f;
     
-    private GameObject PalleteColor;
- 
-
     //Stores the color the user is selecting from the pallet hand. If no color is being selected then this will be null. See OnCollisionEnter/Exit below.
     public GameObject PalleteColor;
 

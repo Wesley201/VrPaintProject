@@ -4,44 +4,17 @@
 		<name>UnityEngine.UnityWebRequestWWWModule</name>
 	</assembly>
 	<members>
-		<member name="T:UnityEngine.WWWAudioExtensions">
-			<summary>Provides methods to access AudioClip or MovieTexture objects from WWW streams.</summary>
-		</member>
 		<member name="T:UnityEngine.WWW">
 			<summary>Simple access to web pages.</summary>
-		</member>
-		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW)">
-			<summary>Returns an AudioClip generated from the downloaded data (Read Only).</summary>
-		</member>
-		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW,System.Boolean)">
-			<summary>Returns an AudioClip generated from the downloaded data (Read Only).</summary>
-		</member>
-		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW,System.Boolean,System.Boolean)">
-			<summary>Returns an AudioClip generated from the downloaded data (Read Only).</summary>
 		</member>
 		<member name="P:UnityEngine.WWW.assetBundle">
 			<summary>Streams an AssetBundle that can contain any kind of asset from the project folder.</summary>
 		</member>
-		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW,System.Boolean,System.Boolean,UnityEngine.AudioType)">
-			<summary>Returns an AudioClip generated from the downloaded data (Read Only).</summary>
-		</member>
-		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClipCompressed(UnityEngine.WWW)">
-			<summary>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</summary>
-		</member>
 		<member name="P:UnityEngine.WWW.bytes">
 			<summary>Returns the contents of the fetched web page as a byte array (Read Only).</summary>
 		</member>
-		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClipCompressed(UnityEngine.WWW,System.Boolean)">
-			<summary>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</summary>
-		</member>
-		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClipCompressed(UnityEngine.WWW,System.Boolean,UnityEngine.AudioType)">
-			<summary>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</summary>
-		</member>
 		<member name="P:UnityEngine.WWW.bytesDownloaded">
 			<summary>The number of bytes downloaded by this WWW query (read only).</summary>
-		</member>
-		<member name="M:UnityEngine.WWWAudioExtensions.GetMovieTexture(UnityEngine.WWW)">
-			<summary>Returns a MovieTexture generated from the downloaded data (Read Only).</summary>
 		</member>
 		<member name="P:UnityEngine.WWW.error">
 			<summary>Returns an error message if there was an error during the download (Read Only).</summary>
@@ -114,6 +87,33 @@
 		</member>
 		<member name="M:UnityEngine.WWW.LoadFromCacheOrDownload(System.String,UnityEngine.CachedAssetBundle,System.UInt32)">
 			<summary>Loads an AssetBundle with the specified version number from the cache. If the AssetBundle is not currently cached, it will automatically be downloaded and stored in the cache for future retrieval from local storage.</summary>
+		</member>
+		<member name="T:UnityEngine.WWWAudioExtensions">
+			<summary>Provides methods to access AudioClip or MovieTexture objects from WWW streams.</summary>
+		</member>
+		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW)">
+			<summary>Returns an AudioClip generated from the downloaded data (Read Only).</summary>
+		</member>
+		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW,System.Boolean)">
+			<summary>Returns an AudioClip generated from the downloaded data (Read Only).</summary>
+		</member>
+		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW,System.Boolean,System.Boolean)">
+			<summary>Returns an AudioClip generated from the downloaded data (Read Only).</summary>
+		</member>
+		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClip(UnityEngine.WWW,System.Boolean,System.Boolean,UnityEngine.AudioType)">
+			<summary>Returns an AudioClip generated from the downloaded data (Read Only).</summary>
+		</member>
+		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClipCompressed(UnityEngine.WWW)">
+			<summary>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</summary>
+		</member>
+		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClipCompressed(UnityEngine.WWW,System.Boolean)">
+			<summary>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</summary>
+		</member>
+		<member name="M:UnityEngine.WWWAudioExtensions.GetAudioClipCompressed(UnityEngine.WWW,System.Boolean,UnityEngine.AudioType)">
+			<summary>Returns an AudioClip generated from the downloaded data that is compressed in memory (Read Only).</summary>
+		</member>
+		<member name="M:UnityEngine.WWWAudioExtensions.GetMovieTexture(UnityEngine.WWW)">
+			<summary>Returns a MovieTexture generated from the downloaded data (Read Only).</summary>
 		</member>
 	</members>
 </doc>
