@@ -7,6 +7,12 @@
 		<member name="T:UnityEngine.RemoteSettings">
 			<summary>Accesses remote settings (common for all game instances).</summary>
 		</member>
+		<member name="T:UnityEngine.RemoteSettings.UpdatedEventHandler">
+			<summary>This event occurs when a new RemoteSettings is fetched and successfully parsed from the server.</summary>
+		</member>
+		<member name="M:UnityEngine.RemoteSettings.ForceUpdate()">
+			<summary>Forces the game to download the newest settings from the server and update its values.</summary>
+		</member>
 		<member name="M:UnityEngine.RemoteSettings.GetInt(System.String,System.Int32)">
 			<summary>Returns the value corresponding to key in the remote settings if it exists.</summary>
 		</member>
@@ -39,9 +45,6 @@
 		</member>
 		<member name="M:UnityEngine.RemoteSettings.GetKeys()">
 			<summary>Returns all the keys in remote settings.</summary>
-		</member>
-		<member name="T:UnityEngine.RemoteSettings.UpdatedEventHandler">
-			<summary>This event occurs when a new RemoteSettings is fetched and successfully parsed from the server.</summary>
 		</member>
 	</members>
 </doc>
