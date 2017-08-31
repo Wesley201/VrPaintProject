@@ -5,6 +5,8 @@ using UnityEngine.XR.WSA.Input;
 
 public class HandTracking : MonoBehaviour
 {
+    private GameObject m_Cam;
+
     /// Objects for tracking the hands
     public GameObject m_PaintingHand;
     public GameObject m_PaletteHand;
@@ -12,6 +14,10 @@ public class HandTracking : MonoBehaviour
     /// Variables for Hand Tracking
     private Vector3 m_HandPos;
     private Vector3 m_HandFor;
+    public Vector3 m_HandTrackingOffset;
+    private Quaternion m_HandRot;
+
+    private Vector3 TrailPos;
 
     private float Offset = 3f;
     public bool m_Drawing = false;
@@ -24,10 +30,8 @@ public class HandTracking : MonoBehaviour
     float timeSinceLastUpdate = 0;
     float minTimeSinceLastUpdate = 0.1f;
     
-    GameObject m_Cam;
-    Vector3 TrailPos;
-
-    public GameObject PalleteColor;
+    private GameObject PalleteColor;
+ 
 
     void Start ()
     {
@@ -53,7 +57,7 @@ public class HandTracking : MonoBehaviour
         m_Drawing = false;
 
         obj.state.sourcePose.TryGetPosition(out m_HandPos);
-        EndTrail(m_HandPos);
+        EndTrail(m_HandPos + m_HandTrackingOffset);
     }
 
     private void InteractionManager_InteractionSourcePressed(InteractionSourcePressedEventArgs obj)
@@ -61,7 +65,7 @@ public class HandTracking : MonoBehaviour
         m_Drawing = true;
 
         obj.state.sourcePose.TryGetPosition(out m_HandPos);
-        TrailPos = m_Cam.transform.forward * 2 + m_HandPos;
+        TrailPos = m_Cam.transform.forward * 2 + m_HandPos + m_HandTrackingOffset;
         Trail(TrailPos);
         m_TrailRenderer.transform.position = TrailPos;
 
@@ -78,7 +82,7 @@ public class HandTracking : MonoBehaviour
         m_Drawing = false;
 
         obj.state.sourcePose.TryGetPosition(out m_HandPos);
-        EndTrail(m_HandPos);
+        EndTrail(m_HandPos + m_HandTrackingOffset);
     }
 
     private void InteractionManager_SourceUpdated(InteractionSourceUpdatedEventArgs state)
@@ -87,21 +91,24 @@ public class HandTracking : MonoBehaviour
 
         statePose.TryGetPosition(out m_HandPos, InteractionSourceNode.Pointer);
         statePose.TryGetForward(out m_HandFor, InteractionSourceNode.Pointer);
+        statePose.TryGetRotation(out m_HandRot, InteractionSourceNode.Pointer);
 
         if (state.state.source.handedness == InteractionSourceHandedness.Right)
         {
-            m_PaintingHand.transform.position = m_HandPos;
+            m_PaintingHand.transform.localPosition = m_HandPos + m_HandTrackingOffset;
+            m_PaintingHand.transform.localRotation = m_HandRot;
 
             if (m_Drawing)
             {
-                TrailPos = m_Cam.transform.forward * 2 + m_HandPos;
-                m_TrailRenderer.transform.position = TrailPos;
+                TrailPos = m_Cam.transform.forward * 2 + m_HandPos + m_HandTrackingOffset; ;
+                m_TrailRenderer.transform.localPosition = TrailPos;
             }
         }
 
         if (state.state.source.handedness == InteractionSourceHandedness.Left)
         {
-            m_PaletteHand.transform.position = m_HandFor;
+            m_PaletteHand.transform.localPosition = m_HandFor + m_HandTrackingOffset;
+            m_PaletteHand.transform.localRotation = m_HandRot;
         }
 
         m_SelectPressedAmount = state.state.selectPressedAmount;
@@ -109,10 +116,8 @@ public class HandTracking : MonoBehaviour
 
     private void InteractionManager_SourceDetected(InteractionSourceDetectedEventArgs state)
     {
-        //state.state.sourcePose.TryGetPosition(out m_HandPos);
-        //TrailPos = m_Cam.transform.forward * 2 + m_HandPos;
-        //Trail(TrailPos);
-        //m_TrailRenderer.transform.position = TrailPos;
+        state.state.sourcePose.TryGetPosition(out m_HandPos);
+        TrailPos = m_Cam.transform.forward * 2 + m_HandPos;
     }
 
     void Trail(Vector3 startPos)
@@ -137,7 +142,7 @@ public class HandTracking : MonoBehaviour
         timeSinceLastUpdate = 0;
     }
 
-    //Color Pallete management
+    //Color Pallet management
   void OnCollisionEnter(Collision collisionObj)
     {
         //If drawing hand collides with an object tagged PalleteColor
@@ -148,5 +153,14 @@ public class HandTracking : MonoBehaviour
             //Retrieve the material of collisionObj and store it in the ColorPicker script's variable "selectedPalleteMaterial"
             ColorPicker.selectedPalleteMaterial = collisionObj.gameObject.GetComponent<Renderer>().material;
         }
+    }
+
+    private void OnDestroy()
+    {
+        InteractionManager.InteractionSourceDetected -= InteractionManager_SourceDetected;
+        InteractionManager.InteractionSourceUpdated -= InteractionManager_SourceUpdated;
+        InteractionManager.InteractionSourceLost -= InteractionManager_InteractionSourceLost;
+        InteractionManager.InteractionSourcePressed -= InteractionManager_InteractionSourcePressed;
+        InteractionManager.InteractionSourceReleased -= InteractionManager_InteractionSourceReleased;
     }
 }
