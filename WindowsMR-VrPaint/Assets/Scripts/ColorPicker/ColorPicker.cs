@@ -11,7 +11,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.WSA.Input;
 
 public class ColorPicker : MonoBehaviour
 {
@@ -58,6 +57,7 @@ public class ColorPicker : MonoBehaviour
         }
     }
 
+    //Only called from Handtracking.cs
     public static void ChangeColor()
     {
         brushColor = selectedPalleteMaterial;
