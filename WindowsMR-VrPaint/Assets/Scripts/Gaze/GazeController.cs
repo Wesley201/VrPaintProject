@@ -35,7 +35,7 @@ public class GazeController : MonoBehaviour
             //If button name is "Button_New", load Main scene
             if (rayHit.collider.name == "Button_New")
             {
-                SceneManager.LoadScene("Main");
+                SceneManager.LoadScene("TestScene");
             }
             //If button name is "Button_Exit", exit the application
             if (rayHit.collider.name == "Button_Exit")
