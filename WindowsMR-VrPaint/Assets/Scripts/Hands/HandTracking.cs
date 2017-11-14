@@ -7,31 +7,30 @@ public class HandTracking : MonoBehaviour
 {
     private GameObject m_Camera;
 
-    /// Objects for tracking the hands
-    public GameObject m_PaintingHand;
-    public GameObject m_PaletteHand;
-
     /// Variables for Hand Tracking
     private Vector3 m_HandPos;
     private Vector3 m_HandFor;
     private Quaternion m_HandRot;
 
+    /// Objects for tracking the hands
+    public GameObject m_PaintingHand;
+    public GameObject m_PaletteHand;
+
     private Vector3 TrailPos;
+
+    public TrailRenderer m_TrailRenderer;
 
     public bool m_Drawing = false;
     public bool m_LineRendererAutoDestruct = false;
 
     public float m_SelectPressedAmount = 0f;
-
-    // MORTY, I'M A PICKLE!
-
-    public TrailRenderer m_TrailRenderer;
     public float startLineWidth = 0.01f;
     public float endLineWidth = 0.01f;
-    public bool ErrorShaderTest = false;
+
     float timeSinceLastUpdate = 0;
     float minTimeSinceLastUpdate = 0.1f;
 
+    // MORTY, I'M A PICKLE!
     // Stores the color the user is selecting from the pallet hand. If no color is being selected then this will be null. See OnCollisionEnter/Exit below.
     public GameObject PalleteColor;
 
@@ -98,9 +97,10 @@ public class HandTracking : MonoBehaviour
     {
         InteractionSourcePose statePose = state.state.sourcePose;
 
-        statePose.TryGetPosition(out m_HandPos, InteractionSourceNode.Pointer);
-        statePose.TryGetForward(out m_HandFor, InteractionSourceNode.Pointer);
-        statePose.TryGetRotation(out m_HandRot, InteractionSourceNode.Pointer);
+        statePose.TryGetPosition(out m_HandPos, InteractionSourceNode.Grip);
+        statePose.TryGetForward(out m_HandFor, InteractionSourceNode.Grip);
+        statePose.TryGetRotation(out m_HandRot, InteractionSourceNode.Grip);
+
 
         if (state.state.source.handedness == InteractionSourceHandedness.Right)
         {
