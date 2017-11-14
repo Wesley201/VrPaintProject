@@ -51,13 +51,10 @@ public class HandTracking : MonoBehaviour
     /// Event Args for the Interaction Manager Events
     private void InteractionManager_InteractionSourceReleased(InteractionSourceReleasedEventArgs obj)
     {
-        if (obj.state.source.handedness == InteractionSourceHandedness.Right)
-        {
-            m_Drawing = false;
+        m_Drawing = false;
 
-            obj.state.sourcePose.TryGetPosition(out m_HandPos);
-            EndTrail(m_HandPos);
-        }
+        obj.state.sourcePose.TryGetPosition(out m_HandPos);
+        EndTrail(m_HandPos);
     }
 
     private void InteractionManager_InteractionSourcePressed(InteractionSourcePressedEventArgs obj)
@@ -84,13 +81,10 @@ public class HandTracking : MonoBehaviour
 
     private void InteractionManager_InteractionSourceLost(InteractionSourceLostEventArgs obj)
     {
-        if (obj.state.source.handedness == InteractionSourceHandedness.Right)
-        {
-            m_Drawing = false;
+        m_Drawing = false;
 
-            obj.state.sourcePose.TryGetPosition(out m_HandPos);
-            EndTrail(m_HandPos);
-        }
+        obj.state.sourcePose.TryGetPosition(out m_HandPos);
+        EndTrail(m_HandPos);
     }
 
     private void InteractionManager_SourceUpdated(InteractionSourceUpdatedEventArgs state)
@@ -100,7 +94,6 @@ public class HandTracking : MonoBehaviour
         statePose.TryGetPosition(out m_HandPos, InteractionSourceNode.Grip);
         statePose.TryGetForward(out m_HandFor, InteractionSourceNode.Grip);
         statePose.TryGetRotation(out m_HandRot, InteractionSourceNode.Grip);
-
 
         if (state.state.source.handedness == InteractionSourceHandedness.Right)
         {
@@ -116,7 +109,7 @@ public class HandTracking : MonoBehaviour
 
         if (state.state.source.handedness == InteractionSourceHandedness.Left)
         {
-            m_PaletteHand.transform.localPosition = m_HandFor;
+            m_PaletteHand.transform.localPosition = m_HandPos;
             m_PaletteHand.transform.localRotation = m_HandRot;
         }
 
@@ -125,11 +118,8 @@ public class HandTracking : MonoBehaviour
 
     private void InteractionManager_SourceDetected(InteractionSourceDetectedEventArgs state)
     {
-        if (state.state.source.handedness == InteractionSourceHandedness.Right)
-        {
-            state.state.sourcePose.TryGetPosition(out m_HandPos);
-            TrailPos = m_Camera.transform.forward * 2 + m_HandPos;
-        }
+        state.state.sourcePose.TryGetPosition(out m_HandPos);
+        TrailPos = m_Camera.transform.forward * 2 + m_HandPos;
     }
 
     void Trail(Vector3 startPos)
