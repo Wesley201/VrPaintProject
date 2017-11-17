@@ -5,6 +5,14 @@ using UnityEngine.XR.WSA.Input;
 
 public class HandTracking : MonoBehaviour
 {
+    //Static Access
+    private static HandTracking self;
+    public static GameObject paintingHand { get { return self.m_PaintingHand; } }
+    public static GameObject paletteHand { get { return self.m_PaletteHand; } }
+    public static GameObject brushTip { get { return self.m_BrushTip;  } }
+    public static Vector3 brushPosition { get { return self.m_BrushTip.transform.position; } }
+
+    //Instance
     private GameObject m_Camera;
 
     /// Variables for Hand Tracking
@@ -15,27 +23,29 @@ public class HandTracking : MonoBehaviour
     /// Objects for tracking the hands
     public GameObject m_PaintingHand;
     public GameObject m_PaletteHand;
+    
+    private TrailRenderer m_TrailRenderer;
 
-    private Vector3 TrailPos;
-
-    public TrailRenderer m_TrailRenderer;
+    public GameObject m_BrushTip;
 
     public bool m_Drawing = false;
     public bool m_LineRendererAutoDestruct = false;
 
     public float m_SelectPressedAmount = 0f;
+    public float m_TrailTrackingDistance = 0.2f;
     public float startLineWidth = 0.01f;
     public float endLineWidth = 0.01f;
+    public float minVertexDistance = 0.03f;
 
     float timeSinceLastUpdate = 0;
     float minTimeSinceLastUpdate = 0.1f;
 
     // MORTY, I'M A PICKLE!
-    // Stores the color the user is selecting from the pallet hand. If no color is being selected then this will be null. See OnCollisionEnter/Exit below.
-    public GameObject PalleteColor;
 
     void Start()
     {
+        self = this;
+
         /// Events to listen to to track the controllers
         InteractionManager.InteractionSourceDetected += InteractionManager_SourceDetected;
         InteractionManager.InteractionSourceUpdated += InteractionManager_SourceUpdated;
@@ -61,22 +71,30 @@ public class HandTracking : MonoBehaviour
     {
         if (obj.state.source.handedness == InteractionSourceHandedness.Right)
         {
-            // We check if the user is trying to change color instead of painting before continuing on
-            if (PalleteColor != null)
-            {
-                // Run ChangeColor method in ColorPicker script
-                ColorPicker.ChangeColor();
-            }
-            else
-            {
-                m_Drawing = true;
+            m_Drawing = true;
 
-                obj.state.sourcePose.TryGetPosition(out m_HandPos);
-                TrailPos = m_Camera.transform.forward * 2 + m_HandPos;
-                Trail(TrailPos);
-                m_TrailRenderer.transform.position = TrailPos;
+            obj.state.sourcePose.TryGetPosition(out m_HandPos);
+            obj.state.sourcePose.TryGetForward(out m_HandFor);
+            CreateTrailRenderer(brushPosition);
+        }
+        else if(obj.state.source.handedness == InteractionSourceHandedness.Left)
+        {
+            DestroyAllTrails();
+        }
+    }
+    
+    private void DestroyAllTrails()
+    {
+        TrailRenderer[] trails = GameObject.FindObjectsOfType<TrailRenderer>();
+
+        foreach(TrailRenderer renderer in trails)
+        {
+            if(renderer != m_TrailRenderer)
+            {
+                GameObject.Destroy(renderer);
             }
         }
+
     }
 
     private void InteractionManager_InteractionSourceLost(InteractionSourceLostEventArgs obj)
@@ -100,10 +118,9 @@ public class HandTracking : MonoBehaviour
             m_PaintingHand.transform.localPosition = m_HandPos;
             m_PaintingHand.transform.localRotation = m_HandRot;
 
-            if (m_Drawing)
+            if (m_Drawing && m_TrailRenderer != null)
             {
-                TrailPos = m_Camera.transform.forward * 2 + m_HandPos;
-                m_TrailRenderer.transform.localPosition = TrailPos;
+                m_TrailRenderer.transform.localPosition = brushPosition;
             }
         }
 
@@ -119,54 +136,45 @@ public class HandTracking : MonoBehaviour
     private void InteractionManager_SourceDetected(InteractionSourceDetectedEventArgs state)
     {
         state.state.sourcePose.TryGetPosition(out m_HandPos);
-        TrailPos = m_Camera.transform.forward * 2 + m_HandPos;
+        state.state.sourcePose.TryGetForward(out m_HandFor);
     }
 
-    void Trail(Vector3 startPos)
+    void CreateTrailRenderer(Vector3 startPos)
     {
-        m_TrailRenderer = new GameObject("Trail").AddComponent<TrailRenderer>();
+        
+        GameObject newTrailObject = new GameObject("Trail");
+        newTrailObject.transform.position = startPos;
+        m_TrailRenderer = newTrailObject.AddComponent<TrailRenderer>();
         m_TrailRenderer.autodestruct = m_LineRendererAutoDestruct;
-        m_TrailRenderer.material = ColorPicker.brushColor;
-        if (ColorPicker.brushColor == null)
-        {
-            //Throws error if somehow the brush material has not been set in ColorPicker.cs
-            Debug.LogError("ERROR: Brush color is null. Has not been set in ColorPicker.cs");
-        }
         m_TrailRenderer.startWidth = startLineWidth;
         m_TrailRenderer.endWidth = endLineWidth;
-        m_TrailRenderer.transform.position = startPos;
+        m_TrailRenderer.minVertexDistance = minVertexDistance;
+        m_TrailRenderer.time = float.MaxValue;
+        m_TrailRenderer.textureMode = LineTextureMode.RepeatPerSegment;
+        m_TrailRenderer.reflectionProbeUsage = UnityEngine.Rendering.ReflectionProbeUsage.BlendProbesAndSkybox;
+        m_TrailRenderer.generateLightingData = true;
+
+        PaintFactory.ApplyPaintToTrailRenderer(m_TrailRenderer);
     }
 
-    // Stops drawing the created line
+    private void Update()
+    {
+        if(m_BrushTip != null)
+        {
+            MeshRenderer renderer = m_BrushTip.GetComponent<MeshRenderer>();
+            if(renderer != null)
+            {
+                renderer.enabled = !m_Drawing;
+            }
+        }
+    }
+    
     void EndTrail(Vector3 endPos)
     {
-        Vector3 v = m_HandPos * 2 + endPos;
+        m_TrailRenderer = null;
         timeSinceLastUpdate = 0;
     }
-
-    // Color Pallet management
-    // --OnCollisionEnter()
-    // --OnCollisionExit()
-    void OnCollisionEnter(Collision collisionObj)
-    {
-        // If drawing hand collides with an object tagged PalleteColor
-        if (collisionObj.gameObject.CompareTag("PalleteColor"))
-        {
-            // Store the game object into PalleteColor for reference
-            PalleteColor = collisionObj.gameObject;
-            // Retrieve the material of collisionObj and store it in the ColorPicker script's variable "selectedPalleteMaterial"
-            ColorPicker.selectedPalleteMaterial = collisionObj.gameObject.GetComponent<Renderer>().material;
-        }
-    }
-
-    void OnCollisionExit(Collision collisionObj)
-    {
-        // If user is not trying to change color we change the PalletColor to null
-        if (collisionObj.gameObject.CompareTag("PalleteColor"))
-        {
-            PalleteColor = null;
-        }
-    }
+    
     private void OnDestroy()
     {
         InteractionManager.InteractionSourceDetected -= InteractionManager_SourceDetected;
@@ -174,7 +182,6 @@ public class HandTracking : MonoBehaviour
         InteractionManager.InteractionSourceLost -= InteractionManager_InteractionSourceLost;
         InteractionManager.InteractionSourcePressed -= InteractionManager_InteractionSourcePressed;
         InteractionManager.InteractionSourceReleased -= InteractionManager_InteractionSourceReleased;
-
-        Destroy(m_TrailRenderer);
+        
     }
 }
