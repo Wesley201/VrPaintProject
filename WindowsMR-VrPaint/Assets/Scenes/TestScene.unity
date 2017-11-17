@@ -832,6 +832,21 @@ Prefab:
       propertyPath: far clip plane
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 114672252616302356, guid: bcccd25ebdcb23a469328b446178db99,
+        type: 2}
+      propertyPath: m_BrushSizeRate
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114672252616302356, guid: bcccd25ebdcb23a469328b446178db99,
+        type: 2}
+      propertyPath: m_BrushMinSize
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 114672252616302356, guid: bcccd25ebdcb23a469328b446178db99,
+        type: 2}
+      propertyPath: m_BrushMaxSize
+      value: 0.05
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114215435810304764, guid: bcccd25ebdcb23a469328b446178db99, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: bcccd25ebdcb23a469328b446178db99, type: 2}
